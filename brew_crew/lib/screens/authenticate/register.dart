@@ -3,21 +3,20 @@ import 'package:brew_crew/shared/constants.dart';
 import 'package:brew_crew/shared/loading.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
 
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
 
   final AuthService _authService = AuthService();
-
   final _formKey = GlobalKey<FormState>();
-  
+
   String email = '';
   String password = '';
   String error = '';
@@ -28,11 +27,11 @@ class _SignInState extends State<SignIn> {
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
-        title: Text('Sign In'),
+        title: Text('Sign Up'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person_pin),
-            label: Text('Register'),
+            label: Text('Sign In'),
             onPressed: (){
               widget.toggleView();
             },
@@ -59,7 +58,7 @@ class _SignInState extends State<SignIn> {
                 onChanged: (val) {
                   setState(() => email = val );
                 },
-                decoration: textInputDecoration.copyWith(hintText: 'Enter Email', suffixIcon: Icon(Icons.person)),
+                decoration: textInputDecoration.copyWith(hintText: 'Enter Email ', suffixIcon: Icon(Icons.person)),
                 ),
                 SizedBox(height: 20.0,),
                 TextFormField(
@@ -74,21 +73,21 @@ class _SignInState extends State<SignIn> {
                 RaisedButton(
                   color: Colors.pink[400],
                   child: Text(
-                    'Sign In',
+                    'Register',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()){
                       setState(() => loading = true);
-                      dynamic result = await _authService.signInWithEmailandPassword(email, password);
+                      dynamic result = await _authService.registerWithEmailandPassword(email, password);
                       if (result == null){
                         setState(() {
-                          error = 'Email or Password is incorrect. Try Again';
+                          error = 'Error Occured. Try Again';
                           loading = false;
                         });
                       }
                     }
-                  }
+                  },
                   ),
                   SizedBox(height: 12.0,),
                   Text(
