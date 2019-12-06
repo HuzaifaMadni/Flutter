@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:instagram_clone/screens/feed.dart';
 
 class AuthServices {
 
@@ -25,7 +24,7 @@ class AuthServices {
             'profileImageUrl' : ''
           });
 
-          Navigator.pushReplacementNamed(context, Feed.id);
+          Navigator.pop(context);
         }
       } catch (e) {
         print(e);
