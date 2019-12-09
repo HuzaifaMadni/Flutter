@@ -24,6 +24,13 @@ class StorageService {
   static Future<String>uploadUserProfileImage(String url, File imageFile) async {
     String photoID = Uuid().v4();
     File image = await compressImage(photoID, imageFile);
+
+    if (url.isNotEmpty){
+      RegExp exp = RegExp(r'userProfile_(.*).jpg');
+      photoID = exp.firstMatch(url)[1];
+      print(photoID);
+    }
+
     StorageUploadTask uploadTask = storageRef.child('images/users/userProfile_$photoID.jpg')
     .putFile(image);
 
