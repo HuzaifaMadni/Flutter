@@ -10,14 +10,15 @@ class Add_ToDo extends StatefulWidget {
 }
 
 class _Add_ToDoState extends State<Add_ToDo> {
-
   final _formkey = GlobalKey<FormState>();
-  DateTime date;
+  DateTime date, time;
   String currentDate;
   String currentTime;
 
+
   @override
   Widget build(BuildContext context) {
+    MaterialLocalizations localizations = MaterialLocalizations.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
@@ -25,15 +26,16 @@ class _Add_ToDoState extends State<Add_ToDo> {
         title: Text(
           'Add ToDo',
           style: TextStyle(
-            fontFamily: 'Crete',
-            fontSize: 20.0,
-            color: Colors.white
-          ),
+              fontFamily: 'Crete', fontSize: 20.0, color: Colors.white),
         ),
         automaticallyImplyLeading: true,
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.done_all, color: Colors.white,size: 32.0,),
+            icon: Icon(
+              Icons.done_all,
+              color: Colors.white,
+              size: 32.0,
+            ),
             label: Text(
               '',
               style: TextStyle(
@@ -44,9 +46,7 @@ class _Add_ToDoState extends State<Add_ToDo> {
             ),
             onPressed: () {
               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home())
-              );
+                  context, MaterialPageRoute(builder: (context) => Home()));
             },
           )
         ],
@@ -54,52 +54,94 @@ class _Add_ToDoState extends State<Add_ToDo> {
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Form(
-          key: _formkey,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Enter title', suffixIcon: Icon(Icons.title)),
-                maxLines: 1,
-                keyboardType: TextInputType.text,
-              ),
-              SizedBox(height: 20.0,),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Enter description'),
-                maxLines: 4,
-                keyboardType: TextInputType.multiline,
-              ),
-              SizedBox(height: 20.0,),
-              GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).requestFocus(new FocusNode());
-                },
-                child: TextFormField(
-                readOnly: true,
-                autofocus: false,
-                showCursor: false,
-                decoration: textInputDecoration.copyWith(hintText: 'Choose Date', labelText: (currentDate ?? 'Choose Date')),
-                onTap: () async {
-                  DateTime dateTime = await showRoundedDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(DateTime.now().year - 1),
-                    lastDate: DateTime(DateTime.now().year + 1),
-                    borderRadius: 2, 
-                    );
-                    if (dateTime != null){
-                      setState(() {
-                        date = dateTime;
-                        currentDate = DateFormat.yMd().format(date);
-                      });
-                    }
-                  },
+            key: _formkey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                      hintText: 'Enter title', suffixIcon: Icon(Icons.title)),
+                  maxLines: 1,
+                  keyboardType: TextInputType.text,
                 ),
-              ),
-              SizedBox(height: 20.0,),
-              
-            ],
-          )
-        ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(
+                      hintText: 'Enter description'),
+                  maxLines: 4,
+                  keyboardType: TextInputType.multiline,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                  },
+                  child: TextFormField(
+                    readOnly: true,
+                    autofocus: false,
+                    showCursor: false,
+                    decoration: textInputDecoration.copyWith(
+                      labelText: currentDate ?? 'Choose Date',
+                      hintText: 'Choose Date',
+                        ),
+                    onTap: () async {
+                      DateTime dateTime = await showRoundedDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(DateTime.now().year - 1),
+                        lastDate: DateTime(DateTime.now().year + 1),
+                        borderRadius: 2,
+                      );
+                      if (dateTime != null) {
+                        setState(() {
+                          date = dateTime;
+                          currentDate = DateFormat.yMd().format(date);
+                        });
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                  },
+                  child: TextFormField(
+                    readOnly: true,
+                    autofocus: false,
+                    showCursor: false,
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Choose Time',
+                        labelText: currentTime ?? 'Choose Time'
+                      ),
+                    onTap: () async {
+                      TimeOfDay _currentTime = new TimeOfDay.now();
+                      TimeOfDay selectedTime = await showTimePicker(context: context, initialTime: _currentTime);
+                      if (selectedTime != null) {
+                        setState(() {
+                          currentTime = localizations.formatTimeOfDay(selectedTime,
+                              alwaysUse24HourFormat: false);
+                        });
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(height: 20.0,),
+                Container(
+                  width: 250.0,
+                  child: RaisedButton(
+                    child: Text('Add', style: TextStyle(color: Colors.white, fontFamily: 'Crete', fontSize: 18.0),),
+                    color: Colors.green,
+                    onPressed: () => print('abc'),
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }

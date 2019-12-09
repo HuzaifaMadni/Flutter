@@ -8,16 +8,15 @@ import 'package:instagram_clone/services/database_service.dart';
 import 'package:instagram_clone/services/storage_service.dart';
 
 class EditProfile extends StatefulWidget {
-
   final User user;
 
   EditProfile({this.user});
+
   @override
   _EditProfileState createState() => _EditProfileState();
 }
 
 class _EditProfileState extends State<EditProfile> {
-
   String name, bio = '';
   bool isLoading = false;
   File profileImage;
@@ -39,10 +38,9 @@ class _EditProfileState extends State<EditProfile> {
     bio = widget.user.bio;
   }
 
-  _displayProfileImage(){
-
-    if (profileImage == null){
-      if (widget.user.profileImageUrl.isEmpty){
+  _displayProfileImage() {
+    if (profileImage == null) {
+      if (widget.user.profileImageUrl.isEmpty) {
         return AssetImage('assets/images/user_placeholder.png');
       } else {
         return CachedNetworkImageProvider(widget.user.profileImageUrl);
@@ -51,7 +49,6 @@ class _EditProfileState extends State<EditProfile> {
       return FileImage(profileImage);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +64,15 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
       body: GestureDetector(
-          onTap: () => FocusScope.of (context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: ListView(
             children: <Widget>[
-              isLoading ? LinearProgressIndicator(
-                backgroundColor: Colors.blue[200],
-                valueColor: AlwaysStoppedAnimation(Colors.blue),
-              ) : SizedBox.shrink(),
+              isLoading
+                  ? LinearProgressIndicator(
+                      backgroundColor: Colors.blue[200],
+                      valueColor: AlwaysStoppedAnimation(Colors.blue),
+                    )
+                  : SizedBox.shrink(),
               Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: Form(
@@ -106,7 +105,9 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           labelText: 'Name',
                         ),
-                        validator: (val) => val.trim().length < 1 ? 'Please enter a valid input' : null,
+                        validator: (val) => val.trim().length < 1
+                            ? 'Please enter a valid input'
+                            : null,
                         onSaved: (val) => name = val,
                       ),
                       TextFormField(
@@ -122,7 +123,9 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                           labelText: 'Bio',
                         ),
-                        validator: (val) => val.trim().length > 150 ? 'Please enter a bio less than 150 characters' : null,
+                        validator: (val) => val.trim().length > 150
+                            ? 'Please enter a bio less than 150 characters'
+                            : null,
                       ),
                       Container(
                         margin: EdgeInsets.all(40.0),
@@ -145,12 +148,12 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ],
-          )
-      ),
+          )),
     );
   }
+
   _submit() async {
-    if (_formkey.currentState.validate()){
+    if (_formkey.currentState.validate()) {
       _formkey.currentState.save();
 
       setState(() {
@@ -161,15 +164,17 @@ class _EditProfileState extends State<EditProfile> {
 
       String profileImageUrl = '';
 
-      if (profileImage == null){
+      if (profileImage == null) {
         profileImageUrl = widget.user.profileImageUrl;
       } else {
-        profileImageUrl = await StorageService.uploadUserProfileImage(widget.user.profileImageUrl, profileImage);
+        profileImageUrl = await StorageService.uploadUserProfileImage(
+            widget.user.profileImageUrl, profileImage);
       }
 
       User user = User(
-        id:widget.user.id,
-        name: name, bio: bio,
+        id: widget.user.id,
+        name: name,
+        bio: bio,
         profileImageUrl: profileImageUrl,
       );
 

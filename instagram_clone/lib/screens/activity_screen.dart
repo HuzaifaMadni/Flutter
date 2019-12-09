@@ -9,7 +9,21 @@ class _ActivityScreenState extends State<ActivityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Activity'),),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Instagram',
+          style: TextStyle(
+            fontFamily: 'Instagram',
+            color: Colors.black,
+            fontSize: 35.0,
+          ),
+        ),
+      ),
+      body: Center(
+        child: Text('Activity'),
+      ),
     );
   }
 }

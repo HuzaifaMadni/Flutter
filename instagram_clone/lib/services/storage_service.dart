@@ -7,32 +7,31 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class StorageService {
-
-  
-
   static Future<File> compressImage(String photoId, File imageFile) async {
     final tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
     File compressedImage = await FlutterImageCompress.compressAndGetFile(
-      imageFile.absolute.path, 
+      imageFile.absolute.path,
       '$path/img_$photoId.jpg',
       quality: 70,
-      );
-      return compressedImage;
+    );
+    return compressedImage;
   }
 
-  static Future<String>uploadUserProfileImage(String url, File imageFile) async {
+  static Future<String> uploadUserProfileImage(
+      String url, File imageFile) async {
     String photoID = Uuid().v4();
     File image = await compressImage(photoID, imageFile);
 
-    if (url.isNotEmpty){
+    if (url.isNotEmpty) {
       RegExp exp = RegExp(r'userProfile_(.*).jpg');
       photoID = exp.firstMatch(url)[1];
       print(photoID);
     }
 
-    StorageUploadTask uploadTask = storageRef.child('images/users/userProfile_$photoID.jpg')
-    .putFile(image);
+    StorageUploadTask uploadTask = storageRef
+        .child('images/users/userProfile_$photoID.jpg')
+        .putFile(image);
 
     StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
     String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();

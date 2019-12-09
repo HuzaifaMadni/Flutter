@@ -9,7 +9,21 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Camera'),),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'Instagram',
+          style: TextStyle(
+            fontFamily: 'Instagram',
+            color: Colors.black,
+            fontSize: 35.0,
+          ),
+        ),
+      ),
+      body: Center(
+        child: Text('Camera'),
+      ),
     );
   }
 }
