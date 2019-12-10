@@ -19,6 +19,7 @@ class _SignInState extends State<SignIn> {
   String email;
   String password;
   bool loading = false;
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -55,81 +56,105 @@ class _SignInState extends State<SignIn> {
                 )
               ],
             ),
-            body: Container(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-                child: Form(
-                  key: _formkey,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      TextFormField(
-                        validator: (val) {
-                          bool regExp = RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(val);
-                          if (regExp) {
-                            return null;
-                          } else {
-                            return 'Enter a valid email address';
-                          }
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (val) {
-                          setState(() => email = val);
-                        },
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Email', suffixIcon: Icon(Icons.email)),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      TextFormField(
-                        validator: (val) {
-                          if (val.length < 6) {
-                            return 'Password should be of more than 6 characters';
-                          } else {
-                            return null;
-                          }
-                        },
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Password', suffixIcon: Icon(Icons.lock)),
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        onChanged: (val) {
-                          setState(() => password = val);
-                        },
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      RaisedButton(
-                        color: Colors.green,
-                        onPressed: () async {
-                          if (_formkey.currentState.validate()) {
-                            setState(() => loading = true);
-                            dynamic result = await services
-                                .signInWithEmailAndPassword(email, password);
-                            if (result == null) {
-                              setState(() {
-                                loading = false;
-                              });
-                            }
-                            print(result);
-                          }
-                        },
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontFamily: 'Crete',
-                            fontSize: 18.0,
-                            color: Colors.white,
+            body: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                    child: Form(
+                      key: _formkey,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20.0,
                           ),
-                        ),
+                          TextFormField(
+                            validator: (val) {
+                              bool regExp = RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(val);
+                              if (regExp) {
+                                return null;
+                              } else {
+                                return 'Enter a valid email address';
+                              }
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            },
+                            decoration: textInputDecoration.copyWith(
+                              hintText: 'Email',
+                              suffixIcon: Icon(Icons.email),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          TextFormField(
+                            validator: (val) {
+                              if (val.length < 6) {
+                                return 'Password should be of more than 6 characters';
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: textInputDecoration.copyWith(
+                                hintText: 'Password',
+                                suffixIcon: Icon(Icons.lock)),
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: true,
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            },
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          RaisedButton(
+                            color: Colors.green,
+                            onPressed: () async {
+                              if (_formkey.currentState.validate()) {
+                                setState(() => loading = true);
+                                dynamic result =
+                                    await services.signInWithEmailAndPassword(
+                                        email, password);
+                                if (result == null) {
+                                  setState(() {
+                                    loading = false;
+                                    error = 'Error occured. Please try again';
+                                  });
+                                }
+                                print(result);
+                              }
+                            },
+                            child: Text(
+                              'Sign In',
+                              style: TextStyle(
+                                fontFamily: 'Crete',
+                                fontSize: 18.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Center(
+                            child: Text(
+                              error,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),

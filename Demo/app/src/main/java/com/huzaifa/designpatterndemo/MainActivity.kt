@@ -3,7 +3,7 @@ package com.huzaifa.designpatterndemo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.*
+import com.huzaifa.designpatterndemo.AdapterPattern.Adapter
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Exception
@@ -12,6 +12,7 @@ import java.net.URL
 class MainActivity : AppCompatActivity() {
 
     var lines = ""
+    var adapter : Adapter = Adapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +29,14 @@ class MainActivity : AppCompatActivity() {
                     lines += line
                     Log.d("Data", lines)
                 }
-                runOnUiThread{
-                    textview.text = lines
-                }
+
+                adapter.createJSONObject(lines)
+                val temp = adapter.getTemp()
+                val name = adapter.getCityName()
+                val desc = adapter.getWeather()
+                Log.d("Data", temp)
+                Log.d("Data", name)
+                Log.d("Data", desc)
             } catch(e : Exception) {
                 e.printStackTrace()
             }

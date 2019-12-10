@@ -21,6 +21,7 @@ class _RegisterState extends State<Register> {
   String password = '';
   String error = '';
   bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(

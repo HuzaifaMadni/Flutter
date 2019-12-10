@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_todo_list/models/user.dart';
+import 'package:my_todo_list/services/storage_services.dart';
 
 class FirebaseServices {
 
@@ -16,12 +17,12 @@ class FirebaseServices {
         .map((FirebaseUser user) => _userFromFirebaseUser(user));
   }  
   
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password, String name) async {
 
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
-      print(user);
+      await StorageService(uid: user.uid).addUserData(name);
       return _userFromFirebaseUser(user);
     } catch(e) {
 
@@ -45,10 +46,6 @@ class FirebaseServices {
       print('Error is $e');
       return null;
     }
-  }
-
-  Future addUserInFirestore(String uid, String name) async{
-
   }
 
   Future signOut() async {

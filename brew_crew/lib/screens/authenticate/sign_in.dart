@@ -22,6 +22,7 @@ class _SignInState extends State<SignIn> {
   String password = '';
   String error = '';
   bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
