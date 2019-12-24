@@ -1,5 +1,6 @@
 package com.huzaifa.daggerpractice.ui.auth;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.huzaifa.daggerpractice.R;
 import com.huzaifa.daggerpractice.models.User;
+import com.huzaifa.daggerpractice.ui.main.MainActivity;
 import com.huzaifa.daggerpractice.viewmodels.ViewModelFactory;
 
 import javax.inject.Inject;
@@ -73,6 +75,7 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
                         case AUTHENTICATED:{
                             handleProgressBar(false);
                             Log.d(TAG, "onChanged: Login Success" + (userAuthResource.data != null ? userAuthResource.data.getEmail() : null));
+                            onLoginSuccess();
                             break;
                         }
                         case ERROR:{
@@ -96,6 +99,12 @@ public class AuthActivity extends DaggerAppCompatActivity implements View.OnClic
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    private void onLoginSuccess(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setLogo(){
