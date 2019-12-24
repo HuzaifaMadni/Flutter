@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.example.databinding.Movies" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/moviesCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:elevation="0dp"
+            app:cardMaxElevation="0dp"
+            app:contentPadding="0dp"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="true"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1.5">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:elevation="0dp"
+                        app:cardMaxElevation="0dp"
+                        app:contentPadding="0dp"
+                        app:cardUseCompatPadding="true"
+                        app:cardPreventCornerOverlap="true"
+                        app:cardCornerRadius="10dp">
+
+                        <ImageView
+                            android:id="@+id/movieIMG"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:foregroundGravity="fill"
+                            android:layout_gravity="fill"
+                            android:src="@drawable/ic_video_camera" />
+
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/movieTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movie.title}"
+                        android:textSize="15sp"
+                        android:gravity="start"
+                        android:layout_margin="5dp"/>
+
+                    <TextView
+                        android:id="@+id/movieRating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ratings"
+                        android:gravity="start"
+                        android:textSize="15sp"
+                        android:layout_margin="5dp"/>
+
+                    <TextView
+                        android:id="@+id/movieDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movie.overview}"
+                        android:minLines="1"
+                        android:maxLines="3"
+                        android:textSize="15sp"
+                        android:gravity="fill"
+                        android:layout_margin="5dp"/>
+
+                    <TextView
+                        android:id="@+id/movieDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movie.release_date}"
+                        android:gravity="end"
+                        android:textSize="15sp"
+                        android:layout_margin="5dp"/>
+
+                    <TextView
+                        android:id="@+id/apiHitTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fetch_time"
+                        android:gravity="end"
+                        android:textSize="15sp"
+                        android:layout_margin="2dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+</layout>
