@@ -1,4 +1,4 @@
-package com.example.databinding
+package com.example.databinding.utils
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,5 +15,4 @@ object Coroutines {
             }.await()
             callback(data)
         }
-
 }

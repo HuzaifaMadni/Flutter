@@ -1,4 +1,4 @@
-package com.example.databinding
+package com.example.databinding.networking
 
 import retrofit2.Response
 import java.io.IOException

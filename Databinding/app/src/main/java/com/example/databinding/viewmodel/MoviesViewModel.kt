@@ -1,8 +1,11 @@
-package com.example.databinding
+package com.example.databinding.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.databinding.models.movie.Movies
+import com.example.databinding.networking.MoviesRepository
+import com.example.databinding.utils.Coroutines
 import kotlinx.coroutines.Job
 
 class MoviesViewModel(
@@ -17,8 +20,12 @@ class MoviesViewModel(
 
     fun getMovies(){
         job = Coroutines.ioThenMain(
-            { repository.getMovies() },
-            { _movies.value = it?.results }
+            {
+                repository.getMovies()
+            },
+            {
+                _movies.value = it?.results
+            }
         )
     }
 

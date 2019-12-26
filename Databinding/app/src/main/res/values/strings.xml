@@ -5,4 +5,7 @@
     <string name="description">Description</string>
     <string name="release_date">Release Date</string>
     <string name="fetch_time">Fetch Time</string>
+    <string name="external_links">External Links</string>
+    <string name="genre">Genre</string>
+    <string name="plot">PLOT</string>
 </resources>

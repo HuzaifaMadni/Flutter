@@ -1,11 +1,8 @@
-package com.example.databinding
+package com.example.databinding.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.databinding.R
 
 class MainActivity : AppCompatActivity() {
 

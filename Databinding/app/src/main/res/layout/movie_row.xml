@@ -5,7 +5,7 @@
     <data>
         <variable
             name="movie"
-            type="com.example.databinding.Movies" />
+            type="com.example.databinding.models.movie.Movies" />
     </data>
 
     <RelativeLayout
@@ -57,8 +57,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:foregroundGravity="fill"
-                            android:layout_gravity="fill"
-                            android:src="@drawable/ic_video_camera" />
+                            app:image="@{movie.poster_path}"
+                            android:layout_gravity="fill" />
 
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
@@ -75,6 +75,7 @@
                         android:layout_height="wrap_content"
                         android:text="@{movie.title}"
                         android:textSize="15sp"
+                        android:textStyle="bold"
                         android:gravity="start"
                         android:layout_margin="5dp"/>
 
@@ -82,7 +83,7 @@
                         android:id="@+id/movieRating"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/ratings"
+                        app:ratings="@{movie.vote_average}"
                         android:gravity="start"
                         android:textSize="15sp"
                         android:layout_margin="5dp"/>
@@ -93,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:text="@{movie.overview}"
                         android:minLines="1"
-                        android:maxLines="3"
+                        android:maxLines="5"
                         android:textSize="15sp"
                         android:gravity="fill"
                         android:layout_margin="5dp"/>
@@ -106,15 +107,6 @@
                         android:gravity="end"
                         android:textSize="15sp"
                         android:layout_margin="5dp"/>
-
-                    <TextView
-                        android:id="@+id/apiHitTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fetch_time"
-                        android:gravity="end"
-                        android:textSize="15sp"
-                        android:layout_margin="2dp"/>
 
                 </LinearLayout>
 

@@ -1,4 +1,7 @@
-package com.example.databinding
+package com.example.databinding.models.movie
+
+import com.example.databinding.models.movie.Dates
+import com.example.databinding.models.movie.Movies
 
 data class MoviesResponse(
     val dates: Dates,
